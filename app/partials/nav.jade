@@ -1,0 +1,11 @@
+nav.navbar.navbar-default.navbar-fixed-top(ng-controller="NavCtrl")
+	.container-fluid
+		a.navbar-brand(ng-href="#/") home
+		ul.nav.navbar-nav
+			li(ng-class="{active: isActiveNav('/todo')}")
+				a(ng-href="#/todo") todo
+			li(ng-class="{active: isActiveNav('/view1')}")
+				a(ng-href="#/view1") first view
+		ul.nav.navbar-nav.navbar-right
+			li(ng-class="{active: isActiveNav('/view2')}")
+				a(ng-href="#/view2") second view
