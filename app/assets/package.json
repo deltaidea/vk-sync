@@ -1,7 +1,7 @@
 {
-  "author": "My Name",
-  "name": "MyAwesomeApp",
-  "description": "Package Description",
+  "author": "Nikita Litvin",
+  "name": "vk-sync",
+  "description": "Syncs vk.com music with a folder",
   "version": "0.0.1",
   "homepage": "",
   "private": true,
@@ -16,7 +16,7 @@
   "dom_storage_quota": 1024,
   "window": {
     "//": "screen settings",
-    "title": "my awesome app",
+    "title": "vk-sync",
     "icon": "link.png",
     "toolbar": true,
     "frame": true,
