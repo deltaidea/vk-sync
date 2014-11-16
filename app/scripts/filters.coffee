@@ -1,6 +1,8 @@
 "use strict"
 
-angular.module( "app.filters", [])
+angular.module( "app.filters", [
+	"app.filters.bytes"
+])
 	.filter( "interpolate", [
 		# Dependency `version` resolves to `scripts/services.coffee`.
 		"version",

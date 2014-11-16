@@ -2,3 +2,39 @@
 
 body
 	margin-top 50px
+
+.song
+	position relative
+	height 1.5em
+
+	.bg-progressbar, .foreground-info
+		position absolute
+		left 0
+		top 0
+		bottom 0
+
+	.bg-progressbar
+		// width should set using inline styles
+		background $state-success-bg
+		overflow hidden
+
+		.size
+			float right
+			font-weight bold
+			color white
+			padding-right 10px
+
+			// .progress is already taken
+			.size-progress:after
+				content: " / "
+
+	.foreground-info
+		.index:after
+			content: ". "
+
+.song.downloaded
+	.bg-progressbar
+		width 100% !important
+
+		.size
+			display none

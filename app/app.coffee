@@ -1,5 +1,7 @@
 "use strict"
 
+window._ = root._ = require "lodash"
+
 App = angular.module "app", [
 	"ngCookies"
 	"ngResource"
@@ -18,10 +20,11 @@ App.config [
 	( $routeProvider, $locationProvider, config ) ->
 
 		$routeProvider
+			.when( "/home", templateUrl: "/partials/home.html" )
 			.when( "/todo", templateUrl: "/partials/todo.html" )
 			.when( "/view1", templateUrl: "/partials/partial1.html" )
 			.when( "/view2", templateUrl: "/partials/partial2.html" )
-			.otherwise( redirectTo: "/todo" )
+			.otherwise( redirectTo: "/home" )
 
 		# Without server side support html5 must be disabled.
 		$locationProvider.html5Mode off

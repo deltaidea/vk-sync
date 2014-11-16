@@ -30,6 +30,10 @@
     "fullscreen": false
   },
   "dependencies": {
-    "nedb": "~0.9.4"
+    "nedb": "~0.9.4",
+    "request": "~2.45.0",
+    "sanitize-filename": "~1.1.1",
+    "format-io": "~0.9.5",
+    "lodash": "~2.4.1"
   }
 }

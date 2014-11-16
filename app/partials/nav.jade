@@ -2,6 +2,8 @@ nav.navbar.navbar-default.navbar-fixed-top(ng-controller="NavCtrl")
 	.container-fluid
 		a.navbar-brand(ng-href="#/") home
 		ul.nav.navbar-nav
+			li(ng-class="{active: isActiveNav('/home')}")
+				a(ng-href="#/home") home
 			li(ng-class="{active: isActiveNav('/todo')}")
 				a(ng-href="#/todo") todo
 			li(ng-class="{active: isActiveNav('/view1')}")
