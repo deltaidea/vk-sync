@@ -12,13 +12,13 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope._ = _ = require "lodash"
 
 		$scope.localPath = "D:/vk-music/"
+		configFilename = $scope.localPath + ".vk-sync.json"
 		$scope.rawRemoteList = []
 
 		$scope.localList = {}
 		$scope.remoteList = {}
 		saveListsToFile = _.throttle ->
 			console.error "saveListsToFile called, see stack"
-			configFilename = $scope.localPath + ".vk-sync.json"
 			content =
 				local: $scope.localList
 				remote: $scope.remoteList
@@ -29,7 +29,6 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		, 1000
 
 		loadListsFromFile = ( callback ) ->
-			configFilename = $scope.localPath + ".vk-sync.json"
 			fs.readFile configFilename, ( err, data ) ->
 				try
 					content = JSON.parse data
