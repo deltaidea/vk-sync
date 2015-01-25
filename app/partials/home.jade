@@ -1,11 +1,11 @@
 .container-fluid(ng-controller="HomeCtrl")
-	h1 {{ _.size( localList ) }}/{{ _.size( remoteList ) }}
+	h1 {{ _.size( syncList ) }}/{{ _.size( remoteList ) }}
 	button(ng-click="syncDown()") Sync down
 
 	input(ng-model="localPath")
 
 	.song(
-		ng-repeat="audio in rawRemoteList"
+		ng-repeat="audio in remoteList"
 		ng-class="{\
 			'downloaded': audio.downloaded,\
 			'downloading': audio.downloading\
@@ -17,5 +17,4 @@
 				span.size-progress {{ audio.progress | bytes }}
 				span.total {{ audio.size | bytes }}
 		.foreground-info
-			//- span.index {{ $index + 1 }}
 			span.title {{ audio.artist }} &mdash; {{ audio.title }}
