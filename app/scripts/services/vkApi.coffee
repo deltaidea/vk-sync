@@ -2,6 +2,7 @@
 
 angular.module( "app.services.vkApi", []).factory "vkApi", ->
 	request = require "request"
+	_ = require "lodash"
 
 	apiAppInfo =
 		id: 4598775

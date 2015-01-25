@@ -1,7 +1,5 @@
 "use strict"
 
-window._ = root._ = require "lodash"
-
 App = angular.module "app", [
 	"ngCookies"
 	"ngResource"
