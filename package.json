@@ -30,7 +30,7 @@
     "jade-angularjs-brunch": "~0.0.5",
     "grunt": "~0.4.2",
     "grunt-node-webkit-builder": "~0.1.14",
-    "nodewebkit": "~0.8.4-2",
+    "nodewebkit": "~0.11.5",
     "grunt-cli": "~0.1.11"
   }
 }
