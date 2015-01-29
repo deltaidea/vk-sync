@@ -118,11 +118,15 @@ angular.module( "app.services.vkApi", []).factory "vkApi", ->
 					url: requestUrl
 					qs: data
 				, ( error, event, rawResult ) ->
-					result = JSON.parse rawResult
-					if result.error?.error_code is 6
+					try
+						result = JSON.parse rawResult
+					catch
 						setTimeout retry, context._retryDelay
-					else
-						callback result
+					finally
+						if result.error?.error_code is 6
+							setTimeout retry, context._retryDelay
+						else
+							callback result
 
 	request: ({ method, data, callback } = {}) ->
 		throw Error "vkApi.request - method is missing!" if not method
