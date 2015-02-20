@@ -65,7 +65,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 					$scope.$apply()
 				onProgress: _.throttle ->
 					$scope.$apply()
-				, 250
+				, 40
 
 		$scope.isSyncing = no
 		$scope.syncDown = ( callback = -> ) ->
