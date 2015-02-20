@@ -1,5 +1,5 @@
 .container-fluid(ng-controller="HomeCtrl")
-	h1 {{ _.size( syncList ) }}/{{ _.size( remoteList ) }}
+	h1 remote: {{ _.size( remoteList ) }}, local: {{ _.size( localList ) }}, sync: {{ _.size( syncList ) }}
 	button(ng-click="syncDown()") Sync down
 	button(ng-click="syncUp()") Sync up
 	button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Auto sync
