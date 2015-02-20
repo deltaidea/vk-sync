@@ -3,4 +3,5 @@
 angular.module "app.services", [
 	"app.services.version"
 	"app.services.vkApi"
+	"app.services.audio"
 ]
