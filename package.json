@@ -9,6 +9,7 @@
     "url": "https://github.com/deltaidea/nw-angular-jade-stylus-seed"
   },
   "scripts": {
+    "start": "brunch watch",
     "compiler": "brunch watch -P",
     "test": "karma start test/karma.conf.js",
     "app": "nodewebkit _public",
