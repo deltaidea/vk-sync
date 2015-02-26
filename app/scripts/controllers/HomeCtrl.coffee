@@ -17,7 +17,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 
 		$scope.syncList = {}
 		$scope.remoteList = {}
-		$scope.localList = {}
+		$scope.localList = []
 
 		saveSyncListToFile = _.throttle ->
 			fs.writeFile configFilename, JSON.stringify( $scope.syncList ),
