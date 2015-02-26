@@ -7,6 +7,7 @@
 
 	input(ng-model="localPath")
 
+	h1 remoteList
 	.song(
 		ng-repeat="audio in remoteList"
 		ng-class="{\
@@ -19,5 +20,21 @@
 			.size
 				span.size-progress {{ audio.progress | bytes }}
 				span.total {{ audio.size | bytes }}
+		.foreground-info
+			span.title {{ audio.artist }} &mdash; {{ audio.title }}
+
+	h1 localList
+	.song(
+		ng-repeat="audio in localList"
+	)
+		.foreground-info
+			span.title {{ audio.artist }} &mdash; {{ audio.title }}
+
+	h1 syncList
+	.song(
+		ng-repeat="audio in syncList"
+		class="downloaded"
+	)
+		.bg-progressbar
 		.foreground-info
 			span.title {{ audio.artist }} &mdash; {{ audio.title }}
