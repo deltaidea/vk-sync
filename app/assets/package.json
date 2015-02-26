@@ -1,39 +1,23 @@
 {
-  "author": "Nikita Litvin",
-  "name": "vk-sync",
-  "description": "Syncs vk.com music with a folder",
-  "version": "0.0.1",
-  "homepage": "",
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "main": "index.html",
-  "node-main": "",
-  "single-instance": true,
-  "chromium-args": "",
-  "dom_storage_quota": 1024,
-  "window": {
-    "//": "screen settings",
-    "title": "vk-sync",
-    "icon": "link.png",
-    "toolbar": true,
-    "frame": true,
-    "position": "center",
-    "width": 760,
-    "height": 560,
-    "min_width": 300,
-    "min_height": 300,
-    "resizable": true,
-    "always-on-top": false,
-    "fullscreen": false
-  },
-  "dependencies": {
-    "nedb": "~0.9.4",
-    "request": "~2.45.0",
-    "sanitize-filename": "~1.1.1",
-    "format-io": "~0.9.5",
-    "lodash": "~2.4.1"
-  }
+	"name": "vk-sync",
+	"description": "Syncs vk.com music with a folder",
+	"version": "0.0.1",
+	"author": "Nikita Litvin",
+	"private": true,
+	"main": "index.html",
+	"window": {
+		"title": "vk-sync",
+		"position": "center",
+		"width": 760,
+		"height": 560,
+		"min_width": 300,
+		"min_height": 300
+	},
+	"dependencies": {
+		"format-io": "~0.9.5",
+		"glob": "~4.3.5",
+		"lodash": "~2.4.1",
+		"request": "~2.45.0",
+		"sanitize-filename": "~1.1.1"
+	}
 }
