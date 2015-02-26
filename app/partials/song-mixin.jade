@@ -1,0 +1,15 @@
+mixin song(onClick, ngRepeat)
+	.song(
+			ng-repeat=ngRepeat
+			ng-class="{\
+				'syncing': item.isSyncing,\
+				'synced': item.isSynced\
+			}"
+			ng-click=onClick
+		)
+			.bg-progressbar(style="width: {{ item.percentage || 0 }}%")
+				.size
+					span.size-progress {{ item.progress | bytes }}
+					span.total {{ item.size | bytes }}
+			.foreground-info
+				span.title {{ item.artist }} &mdash; {{ item.title }}

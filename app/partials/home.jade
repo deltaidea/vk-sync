@@ -1,40 +1,19 @@
+include song-mixin
+
 .container-fluid(ng-controller="HomeCtrl")
-	h1 remote: {{ _.size( remoteList ) }}, local: {{ _.size( localList ) }}, sync: {{ _.size( syncList ) }}
+
 	button(ng-click="syncDown()") Sync down
 	button(ng-click="syncUp()") Sync up
-	button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Auto sync
+	button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Start auto sync
 	button(ng-click="stopAutoSync()", ng-show="autoSyncEnabled") Stop auto sync
 
 	input(ng-model="localPath")
 
-	h1 remoteList
-	.song(
-		ng-repeat="audio in remoteList"
-		ng-class="{\
-			'downloaded': audio.downloaded,\
-			'downloading': audio.downloading\
-		}"
-		ng-click="download(audio)"
-	)
-		.bg-progressbar(style="width: {{ audio.percentage || 0 }}%")
-			.size
-				span.size-progress {{ audio.progress | bytes }}
-				span.total {{ audio.size | bytes }}
-		.foreground-info
-			span.title {{ audio.artist }} &mdash; {{ audio.title }}
+	h1 unsynced remote - {{ getCount("remoteOnly") }}
+	+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
 
-	h1 localList
-	.song(
-		ng-repeat="audio in localList"
-	)
-		.foreground-info
-			span.title {{ audio.artist }} &mdash; {{ audio.title }}
+	h1 unsynced local - {{ getCount("localOnly") }}
+	+song("upload(item)", "item in list | filter: isOfType('localOnly')")
 
-	h1 syncList
-	.song(
-		ng-repeat="audio in syncList"
-		class="downloaded"
-	)
-		.bg-progressbar
-		.foreground-info
-			span.title {{ audio.artist }} &mdash; {{ audio.title }}
+	h1 synced - {{ getCount("synced") }}
+	+song("", "item in list | filter: isOfType('synced')", true)
