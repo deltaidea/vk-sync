@@ -21,9 +21,16 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.$apply()
 				callback()
 		$scope.download = ( item, callback = -> ) ->
+			_ = require "lodash"
+
+			throttledApply = _.throttle ->
+				$scope.$apply()
+			, 50
+
 			audio.download item, $scope.localPath, ->
 				$scope.$apply()
 				callback()
+			, throttledApply
 
 		$scope.isSyncing = no
 		$scope.syncDown = ( callback = -> ) ->

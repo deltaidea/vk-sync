@@ -200,7 +200,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 
 					filename = path.join folder, item.filename
 					req.form().append "file", fs.createReadStream filename
-		download = ( item, folder, callback ) ->
+		download = ( item, folder, callback, onProgress = ( -> ), onStart = -> ) ->
 			request = require "request"
 			path = require "path"
 			fs = require "fs"
@@ -216,15 +216,15 @@ angular.module( "app.services.audio", []).factory "audio", [
 						callback item
 				)
 				.on( "response", ( response ) ->
-					# item.size = response.headers[ "content-length" ]
-					# item.progress = 0
-					# item.percentage = 0
-					# onStart item
+					item.size = response.headers[ "content-length" ]
+					item.progress = 0
+					item.percentage = 0
+					onStart item
 				)
 				.on( "data", ( data ) ->
-					# item.progress += data.length
-					# item.percentage = ( item.progress / item.size ) * 100
-					# onProgress item
+					item.progress += data.length
+					item.percentage = ( item.progress / item.size ) * 100
+					onProgress item
 				)
 				.pipe fs.createWriteStream filename
 
