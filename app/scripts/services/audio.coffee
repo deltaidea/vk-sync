@@ -8,9 +8,10 @@ angular.module( "app.services.audio", []).factory "audio", [
 		# id, artist, title, filename, shouldRemove, isSynced, hasConflict, url
 		list = []
 
+		titleArtistSeparator = " - "
 		toFilename = ( artist, title ) ->
 			sanitizeFilename = require "sanitize-filename"
-			sanitizeFilename( artist + " - " + title ) + ".mp3"
+			sanitizeFilename( artist + titleArtistSeparator + title ) + ".mp3"
 
 		getRemoteList = ( callback ) ->
 			vkApi.request
@@ -39,10 +40,10 @@ angular.module( "app.services.audio", []).factory "audio", [
 
 				localList = filenames.map ( filename ) ->
 					withoutExt = filename.slice 0, -".mp3".length
-					parts = withoutExt.split " - "
+					parts = withoutExt.split titleArtistSeparator
 
 					artist: parts.shift()
-					title: parts.join " – "
+					title: parts.join titleArtistSeparator
 					filename: filename
 
 				callback localList
