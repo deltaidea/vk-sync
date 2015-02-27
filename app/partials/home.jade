@@ -1,19 +1,30 @@
 include song-mixin
 
-.container-fluid(ng-controller="HomeCtrl")
+#wrapper.container-fluid(ng-controller="HomeCtrl")
+	.row
+		#menu.col-sm-3
+			ul.nav.nav-pills.nav-stacked
+				li
+					a(scroll-to="#content") content
+				li
+					a(scroll-to="#remote") remote
+				li
+					a(scroll-to="#local") local
+				li
+					a(scroll-to="#synced") synced
+		#content.col-sm-9.col-sm-offset-3
+			button(ng-click="syncDown()") Sync down
+			button(ng-click="syncUp()") Sync up
+			button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Start auto sync
+			button(ng-click="stopAutoSync()", ng-show="autoSyncEnabled") Stop auto sync
 
-	button(ng-click="syncDown()") Sync down
-	button(ng-click="syncUp()") Sync up
-	button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Start auto sync
-	button(ng-click="stopAutoSync()", ng-show="autoSyncEnabled") Stop auto sync
+			input(ng-model="localPath")
 
-	input(ng-model="localPath")
+			h1#remote unsynced remote - {{ getCount("remoteOnly") }}
+			+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
 
-	h1 unsynced remote - {{ getCount("remoteOnly") }}
-	+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
+			h1#local unsynced local - {{ getCount("localOnly") }}
+			+song("upload(item)", "item in list | filter: isOfType('localOnly')")
 
-	h1 unsynced local - {{ getCount("localOnly") }}
-	+song("upload(item)", "item in list | filter: isOfType('localOnly')")
-
-	h1 synced - {{ getCount("synced") }}
-	+song("", "item in list | filter: isOfType('synced')", true)
+			h1#synced synced - {{ getCount("synced") }}
+			+song("", "item in list | filter: isOfType('synced')", true)

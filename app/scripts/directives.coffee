@@ -1,6 +1,9 @@
 "use strict"
 
-angular.module( "app.directives", [ "app.services" ])
+angular.module( "app.directives", [
+		"app.services"
+		"app.directive.scrollTo"
+	])
 	.directive "appVersion", [
 		"version"
 

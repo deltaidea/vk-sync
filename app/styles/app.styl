@@ -1,7 +1,25 @@
-@require "bower_components/bootstrap-stylus/stylus/bootstrap"
+@require "bower_components/bootstrap-stylus/stylus/variables"
 
 body
-	margin-top 50px
+	position relative
+
+#wrapper
+	max-width $screen-lg
+
+#menu
+	position fixed
+	left 0
+	right 0
+	z-index 1
+	background-color #fff
+	padding 15px
+
+#content
+	position relative
+
+@media screen and (max-width $screen-sm - 1)
+	#content
+		padding-top 100px
 
 .song
 	position relative

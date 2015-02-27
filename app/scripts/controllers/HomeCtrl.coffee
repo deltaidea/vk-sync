@@ -26,10 +26,14 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.$apply()
 				callback()
 
-		$scope.getList = -> audio.getList $scope.localPath, ( list ) ->
-			$scope.list = list
-			$scope.$apply()
+		$scope.getList = ( callback = -> ) ->
+			audio.getList $scope.localPath, ( list ) ->
+				$scope.list = list
+				$scope.$apply()
+				callback list
 
-		$scope.getList()
+		$scope.getList ->
+			$( "body" ).scrollspy target: "#menu"
+
 
 ]
