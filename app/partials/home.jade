@@ -21,10 +21,13 @@ include song-mixin
 			input(ng-model="localPath")
 
 			h1#remote unsynced remote ({{ getCount("remoteOnly") }})
-			+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
+			table.song-list
+				+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
 
 			h1#local unsynced local ({{ getCount("localOnly") }})
-			+song("upload(item)", "item in list | filter: isOfType('localOnly')")
+			table.song-list
+				+song("upload(item)", "item in list | filter: isOfType('localOnly')")
 
 			h1#synced synced ({{ getCount("synced") }})
-			+song("", "item in list | filter: isOfType('synced')", true)
+			table.song-list
+				+song("", "item in list | filter: isOfType('synced')", true)

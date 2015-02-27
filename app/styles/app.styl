@@ -11,7 +11,7 @@ body
 	left 0
 	right 0
 	z-index 1
-	background-color #fff
+	background-color white
 	padding 15px
 
 #content
@@ -21,36 +21,31 @@ body
 	#content
 		padding-top 100px
 
-.song
+.song-list
 	position relative
+	overflow hidden
+	width 100%
+
+.song
+	overflow hidden
 	height 1.5em
 
-	.bg-progressbar, .foreground-info
-		position absolute
-		left 0
-		top 0
-		bottom 0
-
 	.bg-progressbar
-		overflow hidden
+		position absolute
+		height 1.5em
+		z-index -1
 
+	.actions
+		width 150px
 		.size
-			float right
-			font-weight bold
-			color white
-			padding-right 10px
-
-			// .progress is already taken
+			display none
 			.size-progress:after
 				content " / "
 
-	.foreground-info
-		.index:after
-			content ". "
+	&.full-progressbar
+		.bg-progressbar
+			width 100% !important
 
-.song.full-progressbar
-	.bg-progressbar
-		width 100% !important
-
+	&.syncing
 		.size
-			display none
+			display initial

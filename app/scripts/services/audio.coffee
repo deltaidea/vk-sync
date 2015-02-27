@@ -209,6 +209,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 
 			request( item.url )
 				.on( "end", ->
+					item.isSyncing = no
 					item.isSynced = yes
 					item.hasConflict = no
 					item.shouldRemove = no
@@ -217,6 +218,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 				)
 				.on( "response", ( response ) ->
 					item.size = response.headers[ "content-length" ]
+					item.isSyncing = yes
 					item.progress = 0
 					item.percentage = 0
 					onStart item

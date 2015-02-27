@@ -1,5 +1,5 @@
 mixin song(onClick, ngRepeat)
-	.song(
+	tr.song(
 			ng-repeat=ngRepeat
 			ng-class="{\
 				'syncing': item.isSyncing,\
@@ -7,15 +7,16 @@ mixin song(onClick, ngRepeat)
 			}"
 			ng-click=onClick
 		)
-			.bg-progressbar(
-				ng-class="{\
-					'bg-danger': item.shouldRemove,\
-					'bg-success': !item.shouldRemove\
-				}"
-				style="width: {{ item.percentage || 0 }}%"
-			)
-				.size
+			td.title
+				.bg-progressbar(
+					ng-class="{\
+						'bg-danger': item.shouldRemove,\
+						'bg-success': !item.shouldRemove\
+					}"
+					style="width: {{ item.percentage || 0 }}%"
+				)
+				{{ item.artist }} &mdash; {{ item.title }}
+			td.actions
+				.size.pull-right
 					span.size-progress {{ item.progress | bytes }}
 					span.total {{ item.size | bytes }}
-			.foreground-info
-				span.title {{ item.artist }} &mdash; {{ item.title }}
