@@ -3,11 +3,17 @@ mixin song(onClick, ngRepeat)
 			ng-repeat=ngRepeat
 			ng-class="{\
 				'syncing': item.isSyncing,\
-				'synced': item.isSynced\
+				'full-progressbar': item.isSynced || item.shouldRemove\
 			}"
 			ng-click=onClick
 		)
-			.bg-progressbar(style="width: {{ item.percentage || 0 }}%")
+			.bg-progressbar(
+				ng-class="{\
+					'bg-danger': item.shouldRemove,\
+					'bg-success': !item.shouldRemove\
+				}"
+				style="width: {{ item.percentage || 0 }}%"
+			)
 				.size
 					span.size-progress {{ item.progress | bytes }}
 					span.total {{ item.size | bytes }}
