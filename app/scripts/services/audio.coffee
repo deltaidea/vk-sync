@@ -158,6 +158,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 		upload = ( item, folder, callback ) ->
 			request = require "request"
 			path = require "path"
+			fs = require "fs"
 
 			vkApi.request
 				method: "audio.getUploadServer"
