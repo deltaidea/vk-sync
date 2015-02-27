@@ -110,6 +110,8 @@ angular.module( "app.services.vkApi", []).factory "vkApi", ->
 	_request: ({ method, data, callback }) ->
 		requestUrl = requestBaseUrl + method
 
+		ERROR_TOO_MANY_REQUESTS = 6
+
 		context = @
 		@getAuthArgs callback: ( authArgs ) ->
 			data.access_token = authArgs.access_token
@@ -123,7 +125,7 @@ angular.module( "app.services.vkApi", []).factory "vkApi", ->
 					catch
 						setTimeout retry, context._retryDelay
 					finally
-						if result.error?.error_code is 6
+						if result.error?.error_code is ERROR_TOO_MANY_REQUESTS
 							setTimeout retry, context._retryDelay
 						else
 							callback result
