@@ -241,6 +241,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 			saveSyncedList
 			getList
 			isOfType
+			getFirst
 			getCount
 			upload
 			download

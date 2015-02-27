@@ -31,7 +31,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.isSyncing = yes
 
 				downloadRecursive = ->
-					next = audio.findFirst "remoteOnly"
+					next = audio.getFirst "remoteOnly"
 					if next?
 						$scope.download next, downloadRecursive
 					else
@@ -44,7 +44,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.isSyncing = yes
 
 				uploadRecursive = ->
-					next = audio.findFirst "localOnly"
+					next = audio.getFirst "localOnly"
 					if next?
 						$scope.upload next, uploadRecursive
 					else
