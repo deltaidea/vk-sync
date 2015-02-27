@@ -151,6 +151,16 @@ angular.module( "app.services.audio", []).factory "audio", [
 						else no
 			else
 				isOfType( type ) item
+		getFirst = ( type = "all" ) ->
+			found = null
+			if list.length and type is "all"
+				found = list[ 0 ]
+			else
+				list.some ( item ) ->
+					if isOfType item, type
+						found = item
+						yes
+			found
 		getCount = ( type = "all" ) ->
 			if type is "all"
 				list.length

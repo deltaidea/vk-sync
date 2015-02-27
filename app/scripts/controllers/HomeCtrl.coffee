@@ -26,6 +26,33 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.list = list
 				$scope.$apply()
 				callback list
+		$scope.isSyncing = no
+		$scope.syncDown = ( callback = -> ) ->
+			unless $scope.isSyncing
+				$scope.isSyncing = yes
+
+				downloadRecursive = ->
+					next = audio.findFirst "remoteOnly"
+					if next?
+						$scope.download next, downloadRecursive
+					else
+						$scope.isSyncing = no
+						callback()
+
+				downloadRecursive()
+		$scope.syncUp = ( callback = -> ) ->
+			unless $scope.isSyncing
+				$scope.isSyncing = yes
+
+				uploadRecursive = ->
+					next = audio.findFirst "localOnly"
+					if next?
+						$scope.upload next, uploadRecursive
+					else
+						$scope.isSyncing = no
+						callback()
+
+				uploadRecursive()
 
 		$scope.getList ->
 			$( "body" ).scrollspy target: "#menu"
