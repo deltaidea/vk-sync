@@ -2,14 +2,9 @@
 
 angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 	"$scope"
-	"vkApi"
 	"audio"
 
-	( $scope, vkApi, audio ) ->
-		request = require "request"
-		fs = require "fs"
-		$scope._ = _ = require "lodash"
-
+	( $scope, audio ) ->
 		$scope.localPath = "D:/vk-music"
 
 		$scope.list = []
