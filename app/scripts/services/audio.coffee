@@ -112,7 +112,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 
 							if wasSynced and foundLocal
 								remoteItem.isSynced = yes
-							else if shouldRemove
+							else if shouldRemove or ( wasSynced and not foundLocal )
 								remoteItem.shouldRemove = yes
 							else if foundLocal
 								remoteItem.hasConflict = yes
