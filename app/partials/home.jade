@@ -7,11 +7,11 @@ include song-mixin
 				li
 					a(scroll-to="#content") content
 				li
-					a(scroll-to="#remote") remote
+					a(scroll-to="#remote") unsynced remote ({{ getCount("remoteOnly") }})
 				li
-					a(scroll-to="#local") local
+					a(scroll-to="#local") unsynced local ({{ getCount("localOnly") }})
 				li
-					a(scroll-to="#synced") synced
+					a(scroll-to="#synced") synced ({{ getCount("synced") }})
 		#content.col-sm-9.col-sm-offset-3
 			button(ng-click="syncDown()") Sync down
 			button(ng-click="syncUp()") Sync up
@@ -20,11 +20,11 @@ include song-mixin
 
 			input(ng-model="localPath")
 
-			h1#remote unsynced remote - {{ getCount("remoteOnly") }}
+			h1#remote unsynced remote ({{ getCount("remoteOnly") }})
 			+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
 
-			h1#local unsynced local - {{ getCount("localOnly") }}
+			h1#local unsynced local ({{ getCount("localOnly") }})
 			+song("upload(item)", "item in list | filter: isOfType('localOnly')")
 
-			h1#synced synced - {{ getCount("synced") }}
+			h1#synced synced ({{ getCount("synced") }})
 			+song("", "item in list | filter: isOfType('synced')", true)
