@@ -19,6 +19,9 @@ angular.module( "app.services.audio", []).factory "audio", [
 				data:
 					count: 5000
 				callback: ( result ) ->
+					if not result?.response?.items?
+						throw JSON.stringify result
+
 					rawRemoteList = result.response.items
 					remoteList = rawRemoteList.map ( item ) ->
 						id: item.id
