@@ -250,9 +250,12 @@ angular.module( "app.services.audio", []).factory "audio", [
 				.pipe fs.createWriteStream filename
 
 		removeLocal = ( item, folder, callback ) ->
+			path = require "path"
 			fs = require "fs"
 
-			fs.unlink item.filename, ( err ) ->
+			filename = path.join folder, item.filename
+
+			fs.unlink filename, ( err ) ->
 				if err
 					throw err
 
