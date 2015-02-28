@@ -35,6 +35,17 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				callback()
 			, throttledApply
 
+		$scope.removeLocal = ( item, callback = -> ) ->
+			audio.removeLocal item, $scope.localPath, $scope.localPath, ->
+				$scope.$apply()
+				$( "body" ).scrollspy "refresh"
+				callback()
+		$scope.removeLocal = ( item, callback = -> ) ->
+			audio.removeRemote item, $scope.localPath, ->
+				$scope.$apply()
+				$( "body" ).scrollspy "refresh"
+				callback()
+
 		$scope.isSyncing = no
 		$scope.syncDown = ( callback = -> ) ->
 			unless $scope.isSyncing
@@ -51,7 +62,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				removeLocalRecursive = ->
 					next = audio.getFirst "localShouldRemove"
 					if next?
-						audio.removeLocal next, $scope.localPath, removeLocalRecursive
+						$scope.removeLocal next, removeLocalRecursive
 					else
 						downloadRecursive()
 
@@ -73,7 +84,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				removeRemoteRecursive = ->
 					next = audio.getFirst "remoteShouldRemove"
 					if next?
-						$scope.upload next, removeRemoteRecursive
+						$scope.removeRemote next, removeRemoteRecursive
 					else
 						uploadRecursive()
 
