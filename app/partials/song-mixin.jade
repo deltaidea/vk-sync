@@ -1,11 +1,10 @@
-mixin song(onClick, ngRepeat)
+mixin song(ngRepeat)
 	tr.song(
 			ng-repeat=ngRepeat
 			ng-class="{\
 				'syncing': item.isSyncing,\
 				'full-progressbar': item.isSynced || item.shouldRemove\
 			}"
-			ng-click=onClick
 		)
 			td.title
 				.bg-progressbar(

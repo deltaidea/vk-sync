@@ -23,12 +23,12 @@ include song-mixin
 
 			h1#remote unsynced remote ({{ getCount("remoteOnly") }})
 			table.song-list
-				+song("download(item)", "item in list | filter: isOfType('remoteOnly')")
+				+song("item in list | filter: isOfType('remoteOnly')")
 
 			h1#local unsynced local ({{ getCount("localOnly") }})
 			table.song-list
-				+song("upload(item)", "item in list | filter: isOfType('localOnly')")
+				+song("item in list | filter: isOfType('localOnly')")
 
 			h1#synced synced ({{ getCount("synced") }})
 			table.song-list
-				+song("", "item in list | filter: isOfType('synced')", true)
+				+song("item in list | filter: isOfType('synced')")
