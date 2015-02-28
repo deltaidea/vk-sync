@@ -17,6 +17,7 @@ include song-mixin
 			button(ng-click="syncUp()") Sync up
 			button(ng-click="startAutoSync()", ng-hide="autoSyncEnabled") Start auto sync
 			button(ng-click="stopAutoSync()", ng-show="autoSyncEnabled") Stop auto sync
+			button(ng-click="sync()") Sync
 
 			input(ng-model="localPath")
 
