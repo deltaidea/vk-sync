@@ -145,8 +145,10 @@ angular.module( "app.services.audio", []).factory "audio", [
 					switch type
 						when "local" then not item.id? or item.isSynced
 						when "localOnly" then not item.id?
+						when "localShouldRemove" then not item.id? and item.shouldRemove
 						when "remote" then item.id?
 						when "remoteOnly" then item.id? and not item.isSynced
+						when "remoteShouldRemove" then item.id? and item.shouldRemove
 						when "synced" then item.isSynced
 						else no
 			else
@@ -231,9 +233,35 @@ angular.module( "app.services.audio", []).factory "audio", [
 				.pipe fs.createWriteStream filename
 
 		removeLocal = ( item, folder, callback ) ->
-			console.log "removeLocal:", item, folder, callback
+			fs = require "fs"
+
+			fs.unlink item.filename, ( err ) ->
+				if err
+					throw err
+
+				item.isSynced = no
+				if item.shouldRemove
+					item.shouldRemove = no
+					index = list.indexOf item
+					list.splice index, 1
+
+				callback item
 		removeRemote = ( item, callback ) ->
-			console.log "removeRemote:", item, callback
+			vkApi.getAuthArgs
+				callback: ({ user_id }) ->
+					vkApi.request
+						method: "audio.delete"
+						data:
+							audio_id: item.id
+							owner_id: user_id
+						callback: ->
+							item.isSynced = no
+							if item.shouldRemove
+								item.shouldRemove = no
+								index = list.indexOf item
+								list.splice index, 1
+
+							callback item
 
 		{
 			toFilename

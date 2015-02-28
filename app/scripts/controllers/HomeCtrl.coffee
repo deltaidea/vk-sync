@@ -48,7 +48,16 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 						$scope.isSyncing = no
 						callback()
 
-				downloadRecursive()
+				removeLocalRecursive = ->
+					next = audio.getFirst "localShouldRemove"
+					if next?
+						audio.removeLocal next, $scope.localPath, removeLocalRecursive
+					else
+						downloadRecursive()
+
+				removeLocalRecursive()
+			else
+				callback()
 		$scope.syncUp = ( callback = -> ) ->
 			unless $scope.isSyncing
 				$scope.isSyncing = yes
@@ -61,7 +70,23 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 						$scope.isSyncing = no
 						callback()
 
-				uploadRecursive()
+				removeRemoteRecursive = ->
+					next = audio.getFirst "remoteShouldRemove"
+					if next?
+						$scope.upload next, removeRemoteRecursive
+					else
+						uploadRecursive()
+
+				removeRemoteRecursive()
+			else
+				callback()
+
+		$scope.sync = ( callback = -> ) ->
+			unless $scope.isSyncing
+				$scope.getList ->
+					$scope.syncDown ->
+						$scope.syncUp ->
+							callback()
 
 		$scope.getList ->
 			$( "body" ).scrollspy target: "#menu"
