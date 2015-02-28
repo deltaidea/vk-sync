@@ -16,17 +16,18 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope.getCount = audio.getCount
 		$scope.isOfType = audio.isOfType
 
+		_ = require "lodash"
+
+		throttledApply = _.throttle ->
+			$scope.$apply()
+		, 50
+
 		$scope.upload = ( item, callback = -> ) ->
 			audio.upload item, $scope.localPath, ->
 				$scope.$apply()
 				callback()
+			, throttledApply
 		$scope.download = ( item, callback = -> ) ->
-			_ = require "lodash"
-
-			throttledApply = _.throttle ->
-				$scope.$apply()
-			, 50
-
 			audio.download item, $scope.localPath, ->
 				$scope.$apply()
 				callback()
