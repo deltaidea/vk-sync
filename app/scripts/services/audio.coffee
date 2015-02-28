@@ -171,37 +171,54 @@ angular.module( "app.services.audio", []).factory "audio", [
 					count + isOfType item, type
 				, 0
 
-		upload = ( item, folder, callback ) ->
-			request = require "request"
+		upload = ( item, folder, callback, onProgress = ( -> ), onStart = -> ) ->
 			path = require "path"
 			fs = require "fs"
 
-			vkApi.request
-				method: "audio.getUploadServer"
-				callback: ( result ) ->
-					uploadUrl = result.response.upload_url
+			filename = path.join folder, item.filename
+			fs.stat filename, ( err, stats ) ->
+				item.size = stats.size
+				vkApi.request
+					method: "audio.getUploadServer"
+					callback: ( result ) ->
+						uploadUrl = result.response.upload_url
 
-					req = request.post uploadUrl, ( err, res, body ) ->
-						if err
-							throw err
+						item.isSyncing = yes
+						onStart item
 
-						saveAudioParams = JSON.parse body
-						saveAudioParams.artist = item.artist
-						saveAudioParams.title = item.title
+						# See: matlus.com/html5-file-upload-with-progress
 
-						vkApi.request
-							method: "audio.save"
-							data: saveAudioParams
-							callback: ( result ) ->
-								item.id = result.response.id
-								item.isSynced = yes
-								item.hasConflict = no
-								item.shouldRemove = no
-								saveSyncedList folder, ->
-									callback item
+						formData = new FormData()
+						formData.append "file", new File filename, filename
+						xhr = new XMLHttpRequest()
 
-					filename = path.join folder, item.filename
-					req.form().append "file", fs.createReadStream filename
+						xhr.upload.addEventListener "progress", ( evt ) ->
+							item.progress = evt.loaded
+							item.percentage = ( item.progress / item.size ) * 100
+							onProgress item
+
+						xhr.addEventListener "load", ( evt ) ->
+							saveAudioParams = JSON.parse evt.target.responseText
+							saveAudioParams.artist = item.artist
+							saveAudioParams.title = item.title
+
+							vkApi.request
+								method: "audio.save"
+								data: saveAudioParams
+								callback: ( result ) ->
+									item.id = result.response.id
+									item.isSyncing = no
+									item.isSynced = yes
+									item.hasConflict = no
+									item.shouldRemove = no
+									saveSyncedList folder, ->
+										callback item
+
+						xhr.addEventListener "error", ( evt ) ->
+							throw evt
+
+						xhr.open "POST", uploadUrl
+						xhr.send formData
 		download = ( item, folder, callback, onProgress = ( -> ), onStart = -> ) ->
 			request = require "request"
 			path = require "path"
