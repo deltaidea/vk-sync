@@ -25,11 +25,13 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope.upload = ( item, callback = -> ) ->
 			audio.upload item, $scope.localPath, ->
 				$scope.$apply()
+				$( "body" ).scrollspy "refresh"
 				callback()
 			, throttledApply
 		$scope.download = ( item, callback = -> ) ->
 			audio.download item, $scope.localPath, ->
 				$scope.$apply()
+				$( "body" ).scrollspy "refresh"
 				callback()
 			, throttledApply
 
