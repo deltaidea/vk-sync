@@ -24,6 +24,8 @@
  * 2014-10-02
  * - Fixed cannot set windowState of null error when attempting to set localStorage
  *
+ * 2015-03-05
+ * - Don't call window.show() if dev tools are already open (see initWindowState).
  */
 
 var gui = require('nw.gui');
@@ -56,7 +58,14 @@ function initWindowState() {
         dumpWindowState();
     }
 
-    win.show();
+    // On Windows win.show() also acts like win.requestAttention().
+    // If you use LiveReload, it becomes annoying when your app is already open
+    // but starts to blink in the taskbar on changes.
+    // There seems to be no way to check if a window is open, so let's at least
+    // check for dev tools.
+    if (!win.isDevToolsOpen()) {
+        win.show();
+    }
 }
 
 function dumpWindowState() {
