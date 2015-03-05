@@ -8,8 +8,8 @@
 	"window": {
 		"title": "vk-sync",
 		"position": "center",
-		"width": 760,
-		"height": 560,
+		"width": 940,
+		"height": 700,
 		"show": false,
 		"min_width": 300,
 		"min_height": 300
