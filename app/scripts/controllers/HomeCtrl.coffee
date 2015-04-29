@@ -50,6 +50,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope.syncDown = ( callback = -> ) ->
 			unless $scope.isSyncing
 				$scope.isSyncing = yes
+				$scope.$apply()
 
 				downloadRecursive = ->
 					next = audio.getFirst "remoteOnly"
@@ -57,6 +58,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 						$scope.download next, downloadRecursive
 					else
 						$scope.isSyncing = no
+						$scope.$apply()
 						callback()
 
 				removeLocalRecursive = ->
@@ -72,6 +74,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope.syncUp = ( callback = -> ) ->
 			unless $scope.isSyncing
 				$scope.isSyncing = yes
+				$scope.$apply()
 
 				uploadRecursive = ->
 					next = audio.getFirst "localOnly"
@@ -79,6 +82,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 						$scope.upload next, uploadRecursive
 					else
 						$scope.isSyncing = no
+						$scope.$apply()
 						callback()
 
 				removeRemoteRecursive = ->
