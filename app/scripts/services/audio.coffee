@@ -98,7 +98,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 						remoteList.forEach ( remoteItem ) ->
 							foundLocal = null
 							localList.some ( localItem ) ->
-								if localItem.filename is localItem.filename
+								if remoteItem.filename is localItem.filename
 									foundLocal = localItem
 
 							wasSynced = no
