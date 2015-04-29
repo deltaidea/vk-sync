@@ -5,16 +5,24 @@ include song-mixin
 		#menu.col-sm-3
 			ul.nav.nav-pills.nav-stacked
 				li
-					a(scroll-to="#content") content
+					a(scroll-to="#wrapper") settings
 				li
 					a(scroll-to="#remote") unsynced remote ({{ getCount("remoteOnly") }})
 				li
 					a(scroll-to="#local") unsynced local ({{ getCount("localOnly") }})
 				li
 					a(scroll-to="#synced") synced ({{ getCount("synced") }})
+
+			div#syncButton
+				button.btn.btn-default.btn-block(
+					ng-click="sync()"
+					ng-disabled="isSyncing"
+				) {{ isSyncing ? "Syncing…" : "Sync" }}
 		#content.col-sm-9.col-sm-offset-3
-			button(ng-click="sync()") Sync
-			input(ng-model="localPath")
+			#settings
+				div(ng-hide="isSyncing")
+					input(ng-model="localPath")
+				div(ng-show="isSyncing") Syncing…
 
 			h1#remote unsynced remote ({{ getCount("remoteOnly") }})
 			table.song-list
