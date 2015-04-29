@@ -36,5 +36,17 @@ exports.config =
 			modules_folder: 'partials'
 			locals: {}
 
+	overrides:
+		production:
+			paths:
+				public: "dist/cache/sources"
+			optimize: true
+			sourceMaps: false
+			plugins:
+				autoReload:
+					enabled: false
+				jade:
+					pretty: false
+
 	# Enable or disable minifying of result js / css files.
 	minify: true
