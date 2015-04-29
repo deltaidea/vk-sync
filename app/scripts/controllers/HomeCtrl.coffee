@@ -107,5 +107,9 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 			$( "body" ).scrollspy target: "#menu"
 			window.scroll 0, $( "#remote" ).offset().top
 
+		setInterval ->
+			unless $scope.isSyncing
+				$scope.getList()
+		, 15 * 1000
 
 ]
