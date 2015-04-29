@@ -19,7 +19,7 @@ angular.module( "app.services.vkApi", []).factory "vkApi", ->
 		display: "page"
 		v: apiVersion
 		response_type: "token"
-		revoke: 1
+		# revoke: 1
 
 	authUrl = "https://oauth.vk.com/authorize?" +
 		( "#{param}=#{value}" for param, value of authUrlParams ).join "&"
