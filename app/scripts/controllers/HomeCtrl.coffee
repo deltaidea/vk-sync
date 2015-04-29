@@ -40,8 +40,8 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$scope.$apply()
 				$( "body" ).scrollspy "refresh"
 				callback()
-		$scope.removeLocal = ( item, callback = -> ) ->
-			audio.removeRemote item, $scope.localPath, ->
+		$scope.removeRemote = ( item, callback = -> ) ->
+			audio.removeRemote item, ->
 				$scope.$apply()
 				$( "body" ).scrollspy "refresh"
 				callback()
