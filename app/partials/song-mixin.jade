@@ -2,17 +2,26 @@ mixin song(ngRepeat)
 	tr.song(
 			ng-repeat=ngRepeat
 			ng-class="{\
-				'syncing': item.isSyncing,\
-				'full-progressbar': item.isSynced || item.shouldRemove\
+				'syncing': item.isSyncing\
 			}"
 		)
 			td.title
-				.bg-progressbar(
-					ng-class="{\
-						'bg-danger': item.shouldRemove,\
-						'bg-success': !item.shouldRemove\
-					}"
+				.bg-progressbar.bg-success(
 					style="width: {{ item.percentage || 0 }}%"
+				)
+				span.glyphicon.glyphicon-upload(
+					ng-class="{\
+						'text-danger': isOfType(item, 'localShouldRemove'),\
+						'text-muted': isOfType(item, 'localOnly') && !isOfType(item, 'remoteShouldRemove'),\
+						'text-success': isOfType(item, 'remote')\
+					}"
+				)
+				span.glyphicon.glyphicon-download(
+					ng-class="{\
+						'text-danger': isOfType(item, 'remoteShouldRemove'),\
+						'text-muted': isOfType(item, 'remoteOnly') && !isOfType(item, 'localShouldRemove'),\
+						'text-success': isOfType(item, 'local')\
+					}"
 				)
 				{{ item.artist }} &mdash; {{ item.title }}
 			td.actions
