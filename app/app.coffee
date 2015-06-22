@@ -8,7 +8,7 @@ App = angular.module "app", [
 	"app.directives"
 	"app.filters"
 	"app.services"
-	"partials"
+	"app.templates"
 ]
 
 App.config [
@@ -18,10 +18,10 @@ App.config [
 	( $routeProvider, $locationProvider, config ) ->
 
 		$routeProvider
-			.when( "/home", templateUrl: "/partials/home.html" )
-			.when( "/todo", templateUrl: "/partials/todo.html" )
-			.when( "/view1", templateUrl: "/partials/partial1.html" )
-			.when( "/view2", templateUrl: "/partials/partial2.html" )
+			.when( "/home", templateUrl: "app/partials/home.jade" )
+			.when( "/todo", templateUrl: "app/partials/todo.jade" )
+			.when( "/view1", templateUrl: "app/partials/partial1.jade" )
+			.when( "/view2", templateUrl: "app/partials/partial2.jade" )
 			.otherwise( redirectTo: "/home" )
 
 		# Without server side support html5 must be disabled.
