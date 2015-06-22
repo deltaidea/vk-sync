@@ -125,7 +125,8 @@ angular.module( "app.services.vkApi", []).factory "vkApi", ->
 					catch
 						setTimeout retry, context._retryDelay
 					finally
-						if result.error?.error_code is ERROR_TOO_MANY_REQUESTS
+						if result?.error?.error_code is ERROR_TOO_MANY_REQUESTS or
+						not result
 							setTimeout retry, context._retryDelay
 						else
 							callback result
