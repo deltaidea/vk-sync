@@ -36,7 +36,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 			, throttledApply
 
 		$scope.removeLocal = ( item, callback = -> ) ->
-			audio.removeLocal item, $scope.localPath, $scope.localPath, ->
+			audio.removeLocal item, $scope.localPath, ->
 				$scope.$apply()
 				$( "body" ).scrollspy "refresh"
 				callback()
