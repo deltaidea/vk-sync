@@ -19,9 +19,6 @@ App.config [
 
 		$routeProvider
 			.when( "/home", templateUrl: "app/partials/home.jade" )
-			.when( "/todo", templateUrl: "app/partials/todo.jade" )
-			.when( "/view1", templateUrl: "app/partials/partial1.jade" )
-			.when( "/view2", templateUrl: "app/partials/partial2.jade" )
 			.otherwise( redirectTo: "/home" )
 
 		# Without server side support html5 must be disabled.
