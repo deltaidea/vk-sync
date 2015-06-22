@@ -26,6 +26,9 @@
  *
  * 2015-03-05
  * - Don't call window.show() if dev tools are already open (see initWindowState).
+ *
+ * 2015-06-15
+ * - Don't resize the window when using LiveReload.
  */
 
 var gui = require('nw.gui');
@@ -34,36 +37,30 @@ var winState;
 var currWinMode;
 var resizeTimeout;
 var isMaximizationEvent = false;
-
 // extra height added in linux x64 gnome-shell env, use it as workaround
-var deltaHeight = (function () {
-    // use deltaHeight only in windows with frame enabled
-    if (gui.App.manifest.window.frame) return true; else return 'disabled';
-})();
+var deltaHeight = gui.App.manifest.window.frame ? 0 : 'disabled';
 
 
 function initWindowState() {
-    winState = JSON.parse(localStorage.windowState || 'null');
-
-    if (winState) {
-        currWinMode = winState.mode;
-        if (currWinMode === 'maximized') {
-            win.maximize();
-        } else {
-            restoreWindowState();
-        }
-    } else {
-        currWinMode = 'normal';
-        if (deltaHeight !== 'disabled') deltaHeight = 0;
-        dumpWindowState();
-    }
-
-    // On Windows win.show() also acts like win.requestAttention().
-    // If you use LiveReload, it becomes annoying when your app is already open
-    // but starts to blink in the taskbar on changes.
-    // There seems to be no way to check if a window is open, so let's at least
-    // check for dev tools.
+    // Don't resize the window when using LiveReload.
+    // There seems to be no way to check whether a window was reopened, so let's
+    // check for dev tools - they can't be open on the app start, so if
+    // dev tools are open, LiveReload was used.
     if (!win.isDevToolsOpen()) {
+        winState = JSON.parse(localStorage.windowState || 'null');
+
+        if (winState) {
+            currWinMode = winState.mode;
+            if (currWinMode === 'maximized') {
+                win.maximize();
+            } else {
+                restoreWindowState();
+            }
+        } else {
+            currWinMode = 'normal';
+            dumpWindowState();
+        }
+
         win.show();
     }
 }
