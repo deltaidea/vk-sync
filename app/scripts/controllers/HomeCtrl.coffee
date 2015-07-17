@@ -103,8 +103,9 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 						$scope.syncUp ->
 							callback()
 
-		$scope.getList ->
-			$( "body" ).scrollspy target: "#menu"
+		$scope.$watch "localPath", ->
+			unless $scope.isSyncing
+				$scope.getList()
 
 		setInterval ->
 			unless $scope.isSyncing

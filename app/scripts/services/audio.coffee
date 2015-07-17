@@ -37,10 +37,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 			glob "*.mp3",
 				cwd: folder
 				nodir: yes
-			, ( err, filenames ) ->
-				if err
-					throw err
-
+			, ( err, filenames = [] ) ->
 				localList = filenames.map ( filename ) ->
 					withoutExt = filename.slice 0, -".mp3".length
 					parts = withoutExt.split titleArtistSeparator
@@ -65,29 +62,32 @@ angular.module( "app.services.audio", []).factory "audio", [
 		saveSyncedList = ( folder, callback ) ->
 			path = require "path"
 			fs = require "fs"
+			mkdirp = require "mkdirp"
 
-			filename = path.join folder, syncedListFilename
+			mkdirp folder, ( err ) ->
+				throw err if err
 
-			syncedList = list.filter ( item ) ->
-				item.isSynced or item.shouldRemove
-			.map ( item ) ->
-				safeItem =
-					id: item.id
-					artist: item.artist
-					title: item.title
-					filename: item.filename
+				filename = path.join folder, syncedListFilename
 
-				if item.isSynced
-					safeItem.isSynced = yes
-				if item.shouldRemove
-					safeItem.shouldRemove = yes
+				syncedList = list.filter ( item ) ->
+					item.isSynced or item.shouldRemove
+				.map ( item ) ->
+					safeItem =
+						id: item.id
+						artist: item.artist
+						title: item.title
+						filename: item.filename
 
-				safeItem
+					if item.isSynced
+						safeItem.isSynced = yes
+					if item.shouldRemove
+						safeItem.shouldRemove = yes
 
-			fs.writeFile filename, JSON.stringify( syncedList ), ( err ) ->
-				if err
-					throw err
-				callback not err?
+					safeItem
+
+				fs.writeFile filename, JSON.stringify( syncedList ), ( err ) ->
+					throw err if err
+					callback not err?
 
 		getList = ( folder, callback ) ->
 			getRemoteList ( remoteList ) ->
@@ -223,31 +223,35 @@ angular.module( "app.services.audio", []).factory "audio", [
 			request = require "request"
 			path = require "path"
 			fs = require "fs"
+			mkdirp = require "mkdirp"
 
-			filename = path.join folder, item.filename
+			mkdirp folder, ( err ) ->
+				throw err if err
 
-			request( item.url )
-				.on( "end", ->
-					item.isSyncing = no
-					item.isSynced = yes
-					item.hasConflict = no
-					item.shouldRemove = no
-					saveSyncedList folder, ->
-						callback item
-				)
-				.on( "response", ( response ) ->
-					item.size = response.headers[ "content-length" ]
-					item.isSyncing = yes
-					item.progress = 0
-					item.percentage = 0
-					onStart item
-				)
-				.on( "data", ( data ) ->
-					item.progress += data.length
-					item.percentage = ( item.progress / item.size ) * 100
-					onProgress item
-				)
-				.pipe fs.createWriteStream filename
+				filename = path.join folder, item.filename
+
+				request( item.url )
+					.on( "end", ->
+						item.isSyncing = no
+						item.isSynced = yes
+						item.hasConflict = no
+						item.shouldRemove = no
+						saveSyncedList folder, ->
+							callback item
+					)
+					.on( "response", ( response ) ->
+						item.size = response.headers[ "content-length" ]
+						item.isSyncing = yes
+						item.progress = 0
+						item.percentage = 0
+						onStart item
+					)
+					.on( "data", ( data ) ->
+						item.progress += data.length
+						item.percentage = ( item.progress / item.size ) * 100
+						onProgress item
+					)
+					.pipe fs.createWriteStream filename
 
 		removeLocal = ( item, folder, callback ) ->
 			path = require "path"
@@ -256,8 +260,7 @@ angular.module( "app.services.audio", []).factory "audio", [
 			filename = path.join folder, item.filename
 
 			fs.unlink filename, ( err ) ->
-				if err
-					throw err
+				throw err if err
 
 				item.isSynced = no
 				if item.shouldRemove
