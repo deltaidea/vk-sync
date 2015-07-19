@@ -2,6 +2,8 @@
 
 Syncs music between vk.com and a local folder.
 
+![vk-sync](http://i.imgur.com/ZY111Ty.png)
+
 ## Prerequisites
 
 - `npm install`
