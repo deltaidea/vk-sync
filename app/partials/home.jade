@@ -23,7 +23,7 @@ include song-mixin
 				div(ng-hide="isSyncing")
 					input(
 						ng-model="localPath"
-						ng-model-options="{ debounce: 1000 }"
+						ng-model-options="{ updateOn: 'blur' }"
 					)
 				div(ng-show="isSyncing") Syncing…
 
