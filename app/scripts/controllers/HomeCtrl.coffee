@@ -6,7 +6,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 
 	( $scope, audio ) ->
 		$scope.list = []
-		$scope.localPath = "D:/vk-music"
+		$scope.localPath = localStorage.localPath or "D:/vk-music"
 
 		$scope.getList = ( callback = -> ) ->
 			audio.getList $scope.localPath, ( list ) ->
@@ -106,6 +106,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 		$scope.$watch "localPath", ->
 			unless $scope.isSyncing
 				$scope.getList()
+				localStorage.localPath = $scope.localPath
 
 		setInterval ->
 			unless $scope.isSyncing
