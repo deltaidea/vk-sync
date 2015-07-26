@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/deltaidea/nw-angular-jade-stylus-seed"
   },
+  "private": true,
   "scripts": {
     "start": "brunch watch",
     "prod": "brunch watch --production",
