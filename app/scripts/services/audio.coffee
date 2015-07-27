@@ -95,6 +95,13 @@ angular.module( "app.services.audio", []).factory "audio", [
 					getSavedSyncedList folder, ( syncedList ) ->
 						newList = remoteList
 
+						oldList = list
+
+						syncingItem = null
+						oldList.some ( oldItem ) ->
+							if oldItem.isSyncing
+								syncingItem = oldItem
+
 						remoteList.forEach ( remoteItem ) ->
 							foundLocal = null
 							localList.some ( localItem ) ->
@@ -135,6 +142,11 @@ angular.module( "app.services.audio", []).factory "audio", [
 									localItem.shouldRemove = yes
 								localItem.isSynced = no
 								newList.push localItem
+
+						if syncingItem
+							newList.some ( item, i, list ) ->
+								if item.filename is syncingItem.filename
+									list[ i ] = syncingItem
 
 						callback list = newList
 

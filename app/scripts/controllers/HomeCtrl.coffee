@@ -47,61 +47,49 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				callback()
 
 		$scope.isSyncing = no
-		$scope.syncDown = ( callback = -> ) ->
-			unless $scope.isSyncing
-				$scope.isSyncing = yes
-				$scope.$apply()
-
-				downloadRecursive = ->
-					next = audio.getFirst "remoteOnly"
-					if next?
-						$scope.download next, downloadRecursive
-					else
-						$scope.isSyncing = no
-						$scope.$apply()
-						callback()
-
-				removeLocalRecursive = ->
-					next = audio.getFirst "localShouldRemove"
-					if next?
-						$scope.removeLocal next, removeLocalRecursive
-					else
-						downloadRecursive()
-
-				removeLocalRecursive()
-			else
-				callback()
-		$scope.syncUp = ( callback = -> ) ->
-			unless $scope.isSyncing
-				$scope.isSyncing = yes
-				$scope.$apply()
-
-				uploadRecursive = ->
-					next = audio.getFirst "localOnly"
-					if next?
-						$scope.upload next, uploadRecursive
-					else
-						$scope.isSyncing = no
-						$scope.$apply()
-						callback()
-
-				removeRemoteRecursive = ->
-					next = audio.getFirst "remoteShouldRemove"
-					if next?
-						$scope.removeRemote next, removeRemoteRecursive
-					else
-						uploadRecursive()
-
-				removeRemoteRecursive()
-			else
-				callback()
-
 		$scope.sync = ( callback = -> ) ->
-			unless $scope.isSyncing
+			if $scope.isSyncing
+				callback()
+
+			$scope.isSyncing = yes
+
+			syncOne = ( callback ) ->
+				if next = audio.getFirst "localShouldRemove"
+					$scope.removeLocal next, -> callback yes
+				else if next = audio.getFirst "remoteOnly"
+					$scope.download next, -> callback yes
+				else if next = audio.getFirst "remoteShouldRemove"
+					$scope.removeRemote next, -> callback yes
+				else if next = audio.getFirst "localOnly"
+					$scope.upload next, -> callback yes
+				else
+					callback no
+
+			syncOneRecursive = ( afterAll, afterEach ) ->
+				syncOne ( hadSomethingToSync ) ->
+					if hadSomethingToSync
+						afterEach()
+						syncOneRecursive afterAll, afterEach
+					else
+						afterAll()
+
+			syncRecursive = ->
+				syncedCount = 0
 				$scope.getList ->
-					$scope.syncDown ->
-						$scope.syncUp ->
+					afterAll = ->
+						if syncedCount > 0
+							syncRecursive()
+						else
+							$scope.isSyncing = no
+							$scope.$apply()
 							callback()
+
+					afterEach = ->
+						syncedCount += 1
+
+					syncOneRecursive afterAll, afterEach
+
+			syncRecursive()
 
 		$scope.$watch "localPath", ->
 			unless $scope.isSyncing
@@ -109,8 +97,7 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				localStorage.localPath = $scope.localPath
 
 		setInterval ->
-			unless $scope.isSyncing
-				$scope.getList()
+			$scope.getList()
 		, 15 * 1000
 
 ]
