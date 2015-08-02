@@ -9,6 +9,7 @@
 		"title": "vk-sync",
 		"position": "center",
 		"icon": "icon-32.png",
+		"toolbar": false,
 		"width": 940,
 		"height": 700,
 		"show": false,
