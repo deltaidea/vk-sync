@@ -16,16 +16,26 @@ include song-mixin
 			div#syncButton
 				button.btn.btn-default.btn-block(
 					ng-click="sync()"
-					ng-disabled="isSyncing"
+					ng-disabled="isSyncing || gettingList"
 				) {{ isSyncing ? "Syncing…" : "Sync" }}
 		#content.col-sm-9.col-sm-offset-3
 			#settings
-				div(ng-hide="isSyncing")
-					input(
-						ng-model="localPath"
-						ng-model-options="{ updateOn: 'blur' }"
-					)
-				div(ng-show="isSyncing") Syncing…
+				div
+					div.form-group
+						label(for="localPath") Path to a local folder
+						input.form-control#localPath(
+							ng-model="localPath"
+							ng-model-options="{ updateOn: 'blur' }"
+							ng-disabled="isSyncing || gettingList"
+						)
+					div.checkbox
+						label
+							input(
+								type="checkbox"
+								ng-model="autoSync"
+								ng-disabled="isSyncing || gettingList"
+							)
+							| Auto sync
 
 			h1#remote unsynced remote ({{ getCount("remoteOnly") }})
 			table.song-list

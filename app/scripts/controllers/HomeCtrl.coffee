@@ -7,10 +7,20 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 	( $scope, audio ) ->
 		$scope.list = []
 		$scope.localPath = localStorage.localPath or "D:/vk-music"
+		$scope.isSyncing = no
+		$scope.gettingList = no
+		$scope.autoSync = localStorage.autoSync is "true"
 
 		$scope.getList = ( callback = -> ) ->
+			if $scope.gettingList
+				setTimeout callback
+				return
+
+			$scope.gettingList = yes
+
 			audio.getList $scope.localPath, ( list ) ->
 				$scope.list = list
+				$scope.gettingList = no
 				$scope.$apply()
 				callback list
 		$scope.getCount = audio.getCount
@@ -46,10 +56,10 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 				$( "body" ).scrollspy "refresh"
 				callback()
 
-		$scope.isSyncing = no
 		$scope.sync = ( callback = -> ) ->
 			if $scope.isSyncing
 				callback()
+				return
 
 			$scope.isSyncing = yes
 
@@ -91,13 +101,24 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 
 			syncRecursive()
 
-		$scope.$watch "localPath", ->
-			unless $scope.isSyncing
+		autoUpdate = ->
+			callback = ->
+				setTimeout autoUpdate, 15 * 1000
+
+			if $scope.autoSync
+				$scope.sync callback
+			else
+				$scope.getList callback
+
+		$scope.$watch "localPath", ( newValue, oldValue ) ->
+			unless newValue is oldValue
+				$scope.autoSync = off
 				$scope.getList()
 				localStorage.localPath = $scope.localPath
 
-		setInterval ->
-			$scope.getList()
-		, 15 * 1000
+		$scope.$watch "autoSync", ->
+			localStorage.autoSync = $scope.autoSync
+
+		autoUpdate()
 
 ]
