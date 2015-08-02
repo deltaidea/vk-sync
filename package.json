@@ -12,7 +12,8 @@
   "scripts": {
     "start": "brunch watch",
     "prod": "brunch watch --production",
-    "app": "nw _public"
+    "app": "nw _public",
+    "dist": "node -e \"require('coffee-script/register'); require('./dist/dist.coffee');\""
   },
   "dependencies": {
     "auto-reload-brunch": "^1.7.8",
@@ -22,6 +23,7 @@
     "coffee-script": "^1.9.1",
     "coffee-script-brunch": "^1.8.1",
     "css-brunch": "^1.7.0",
+    "fs-extra": "^0.22.1",
     "jade": "^1.9.2",
     "jade-angularjs-brunch": "^1.1.1",
     "javascript-brunch": "^1.7.1",
