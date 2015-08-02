@@ -66,10 +66,10 @@ angular.module( "app.controllers.HomeCtrl", []).controller "HomeCtrl", [
 			syncOne = ( callback ) ->
 				if next = audio.getFirst "localShouldRemove"
 					$scope.removeLocal next, -> callback yes
-				else if next = audio.getFirst "remoteOnly"
-					$scope.download next, -> callback yes
 				else if next = audio.getFirst "remoteShouldRemove"
 					$scope.removeRemote next, -> callback yes
+				else if next = audio.getFirst "remoteOnly"
+					$scope.download next, -> callback yes
 				else if next = audio.getFirst "localOnly"
 					$scope.upload next, -> callback yes
 				else
