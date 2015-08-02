@@ -39,7 +39,7 @@ exports.config =
 	overrides:
 		production:
 			paths:
-				public: "dist/cache/sources"
+				public: "dist/cache"
 			optimize: true
 			sourceMaps: false
 			plugins:

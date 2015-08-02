@@ -17,7 +17,7 @@ Syncs music between vk.com and a local folder.
 
 ## Deploy
 
-- `npm run prod` - this will watch for changes and recompile minified code to `dist/cache/sources`.
-- For now, assemble the app manually - merge an NW.js distribution `node_modules/nw/nwjs` with `dist/cache/sources`, launch using `nw.exe`.
+- `npm run prod` - this will watch for changes and recompile minified code to `dist/cache`.
+- `npm run dist` - this will compile distrs (portable and installer) to `dist/releases`. Requires WinRAR.
 
 ## Licence - [MIT](LICENSE)

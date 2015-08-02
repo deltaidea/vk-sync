@@ -1,12 +1,11 @@
 {
 	"name": "vk-sync",
 	"description": "Syncs vk.com music with a folder",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "Nikita Litvin",
 	"private": true,
 	"main": "index.html",
 	"window": {
-		"title": "vk-sync",
 		"position": "center",
 		"icon": "icon-32.png",
 		"toolbar": false,
