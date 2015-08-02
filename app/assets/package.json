@@ -8,6 +8,7 @@
 	"window": {
 		"title": "vk-sync",
 		"position": "center",
+		"icon": "icon-32.png",
 		"width": 940,
 		"height": 700,
 		"show": false,
